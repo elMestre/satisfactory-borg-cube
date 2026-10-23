@@ -1,5 +1,13 @@
 # Carta arquitectónica del cubo Borg (fase 1)
 
+> **Decisiones de Carlos (2026-10-23, 16:57):**
+> - **Concepto "Estrella de la Muerte II":** no se cierra todavía un cubo perfecto. Se cierra y se embellece lo que ya hay (los bloques de la fábrica), y el cubo queda *en construcción*, con su esqueleto a la vista hasta la altura final. Hay piezas ligeras y desbloqueadas para eso: el Big Frame Pillar (pilar de celosía) y las vigas Metal, H, Cross y Painted.
+> - **Altura con proporción "perfecta":** elegí **3:2:1, con el techo final a 568 m**. La planta del anillo ya es 3:2 exacta (1.704 × 1.136), 568 es la mitad de 1.136 y un tercio de 1.704, y el anillo actual de 380 m queda a 2/3 de la altura (379). Alternativa áurea: techo a unos 616 m, con el anillo dividiendo la altura en la proporción áurea (380/616 = 0,617, frente a 1/φ = 0,618).
+> - **Fachada variada por plantas:** cada franja o planta puede tener su tipología (ciega con relieve, franja de ventanas, panal o hexágonos, lamas), y se **reserva un espacio enorme acristalado**. Propuesta: un muro cortina de Full Frame Window en la cara sur del bloque del ascensor (X 3.050–3.250), que es la vista desde el cañón, y una cubierta de vidrio (`Roof_Window`) sobre parte del interior vacío del anillo.
+> - **Luz:** Carlos me deja decidir, y la **aplazo**: primero las envolventes y el esqueleto; las luces al final, con el método mixto del punto 6.
+>
+> Los puntos de abajo son el borrador anterior; donde contradigan estas decisiones, mandan las decisiones.
+
 Borrador del 2026-10-23, hecho con datos de `334c.sav` y con lo aprendido en la fase 0 (`img/336_*`, `img/335_*`). Cada punto lleva una propuesta recomendada, sus alternativas y una casilla para la **decisión de Carlos**. Las maquetas son `img/f1_planta.png`, `img/f1_alzados.png` e `img/f1_iso.png` (las genera `maqueta.py`).
 
 ## 1. Retícula y alturas
