@@ -163,3 +163,4 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
   - 14.495 piezas. Descartes, los previstos: 44 en la escalera, 40 cimientos sobre el puente y 2 paredes inclinadas que lo tapaban.
   - Se desconoce la altura del terreno bajo la sala: los pilares bajan a −2 m. Si quedan cortos o enterrados, se verá en el juego.
 - 2026-10-23 19:25: Carlos aporta una guía de diseño arquitectónico para Satisfactory; se guarda en `DISENO.md` y se enlaza en las Normas.
+- 2026-10-23 19:05 (hora del log): el **340 carga sin errores nuevos** y sin aviso de huella. Piezas ligeras aplicadas en **1,08 s** (unas 42.300, 1,5 veces las de partida). Serie: 0,75 s (27.900) → 0,88 s (36.700) → 1,08 s (42.300).
