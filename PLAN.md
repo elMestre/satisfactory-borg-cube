@@ -170,3 +170,4 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
 
 - 2026-10-23 19:50: Carlos pide aparecer en la sala ("hazme spawnear en la sala o ponme un tubo"). **`342.sav`** = el 341 con el jugador (`Char_Player_C`, el pivote 1,1 m sobre el suelo) en (2400, −2100, 383,1), 100 m al norte del ascensor y mirando al sur. Desde ahora cada versión de `cubo.py` hace aparecer al jugador en la sala. Copiado, con vigilante.
 - 2026-10-23 19:31 (hora del log): el **342 carga sin errores nuevos**; piezas ligeras aplicadas en 1,09 s.
+- 2026-10-23 19:55: **Carlos, sobre el 342: ninguna esquina queda bien, y el proceso es "poco eficiente y poco efectivo; iterativo y con tantos fallos, quema tokens y consigue poco".** Lección: no diseñar a ciegas por saves. Propuesta: él diseña un módulo en el juego (marcado con una muestra de color) y el script lo lee del save y lo replica. Ver la memoria `satisfactory-proceso-modulos`.
