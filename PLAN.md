@@ -124,3 +124,13 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
   - 3.905 piezas. Se descartaron 52 por choque: 39 en la columna de la escalera de mano (X 3200) y 13 de la coraza hundida delante de los pilares de X 3176 y 3248. Arreglo pendiente: no hundir esas dos columnas.
   - `muestra.py` reorganizado: `escribir()` es común a la muestra y a las secciones, comprueba choques con actores (splines, escaleras de mano, cables) y descarta lo que choca. El 336 regenerado sale idéntico byte a byte.
 - 2026-10-23 17:15 (hora del log, UTC+2): el **337 carga sin errores nuevos** y sin aviso de huella. Piezas ligeras aplicadas en 0,79 s (0,73 s con el 336). Esperando las capturas de Carlos.
+- 2026-10-23 17:35: lo que dijo Carlos del 337: la pared "no pinta mal, tampoco bonita"; el ascensor flotando "así está feo", y la cruz del techo se cruza con la carga (las abrazaderas quedan por debajo de las vigas). Elige la **opción B** (colgado de verdad) y propone **corredores modulares** o embellecer los nodos de fábrica concentrada.
+- 2026-10-23 17:50: **`338.sav`** (`cubo.py` reescrito), copiado a SaveGames, con vigilante. Contenido:
+  - **Vitrina:** cristal de 50 a 138 m, delante de la fábrica.
+  - **Tres fachadas de prueba encima, sin azar:** monolito (oeste), bandas de ventanas hexagonales (centro) y costillas de hormigón cada 16 m (este).
+  - **Isla del ascensor:** 80 × 80 m, chaflanes por debajo, 4 tirantes de celosía y un hueco de 80 m en la cruz del techo.
+  - **Corredor modular** sobre el puente N–S (X 2448): tubo de 8 m con ventana cada 4.º vano y costillas cada 32 m.
+  - 5.530 piezas. Se descartaron 46: 44 en la escalera de mano de X 3200 y 2 losas del techo del corredor en su extremo norte.
+  - **Corrección:** el cable del ascensor sale de su pivote (la caja de 8 × 8 × 1.000 m no está desplazada). La caja desplazada 20 m es un detalle pequeño de 5 × 4 × 3 m.
+  - El catálogo trae ahora `caja_m` (holgura en ejes de la pieza) para 501 piezas, y los choques usan esas cajas de los actores.
+

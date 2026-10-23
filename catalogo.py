@@ -1,9 +1,10 @@
 """Catálogo de piezas construibles → catalogo.json, una pieza por línea:
 clase, ruta (tal cual va en el save), nombre del juego, tipo, ligera (mManagedByLightweightBuildableSubsystem: va en
-FGLightweightBuildableSubsystem y no como actor), medidas (m), menú, receta y si está desbloqueada.
+FGLightweightBuildableSubsystem y no como actor), medidas (m), caja (m, ejes de la pieza, de mClearanceData), menú, receta
+y si está desbloqueada.
 Uso: .venv/bin/python catalogo.py [SAVE]   (SAVE da las recetas desbloqueadas y las parejas clase-receta reales; por defecto 334c.sav)
 Fuentes: Docs/en-US.json del juego (nombres, medidas, recetas) y el índice del .utoc (ruta de cada asset)."""
-import json, re, struct, sys
+import json, math, re, struct, sys
 import satisfactory_save as s
 
 GAME = "/home/carlos/.local/share/Steam/steamapps/common/Satisfactory"
@@ -67,6 +68,24 @@ def game_path(p):
     head, _, tail = p.partition("/Content/")
     root = head.rsplit("/", 1)[-1]
     return f"/{'Game' if root == 'FactoryGame' else root}/{tail}"
+
+
+def caja_local(clearance):
+    """Caja (min, max) en m, en ejes de la pieza, que envuelve todas sus cajas de holgura (mClearanceData), o None."""
+    pts = []
+    for m in re.finditer(r"Min=\(X=([-\d.]+),Y=([-\d.]+),Z=([-\d.]+)\),Max=\(X=([-\d.]+),Y=([-\d.]+),Z=([-\d.]+)\)(.*?)(?=ClearanceBox=|$)", clearance):
+        lo, hi, resto = [float(v) for v in m.groups()[:3]], [float(v) for v in m.groups()[3:6]], m.group(7)
+        r = re.search(r"Rotation=\(X=[-\d.]+,Y=[-\d.]+,Z=([-\d.]+),W=([-\d.]+)\)", resto)
+        t = re.search(r"Translation=\(X=([-\d.]+),Y=([-\d.]+),Z=([-\d.]+)\)", resto)
+        a = 2 * math.atan2(float(r.group(1)), float(r.group(2))) if r else 0.0
+        tx, ty, tz = (float(v) for v in t.groups()) if t else (0.0, 0.0, 0.0)
+        for x in (lo[0], hi[0]):
+            for y in (lo[1], hi[1]):
+                for z in (lo[2], hi[2]):
+                    pts.append((x * math.cos(a) - y * math.sin(a) + tx, x * math.sin(a) + y * math.cos(a) + ty, z + tz))
+    if not pts:
+        return None
+    return [[round(min(p[i] for p in pts) / 100, 2) for i in range(3)], [round(max(p[i] for p in pts) / 100, 2) for i in range(3)]]
 
 
 def tokens(name, prefix):
@@ -144,6 +163,7 @@ def main(save):
             pieces.append({
                 "clase": cls, "ruta": f"{ps[0]}.{cls}", "nombre": c.get("mDisplayName", ""),
                 "tipo": kind, "ligera": c.get("mManagedByLightweightBuildableSubsystem") == "True", "medidas_m": dims,
+                "caja_m": caja_local(c.get("mClearanceData", "")),
                 "menu": recs[0][1] if recs else None,
                 "receta": recs[0][0] if recs else None,
                 "desbloqueada": bool(recs) and recs[0][0] in unlocked,
@@ -168,4 +188,6 @@ if __name__ == "__main__":
     assert by["Build_Wall_Orange_FlipTris_8x4_C"]["receta"].endswith("Recipe_Wall_Orange_FlipTris_8x4_C")
     assert by["Build_Ramp_8x4_01_C"]["desbloqueada"]
     assert not by["Build_Wall_Conveyor_8x4_01_Steel_C"]["ligera"] and by["Build_Beam_C"]["ligera"]  # el flag manda, no la sección
+    assert by["Build_Wall_8x4_02_C"]["caja_m"] == [[-0.25, -4.0, 0.0], [0.25, 4.0, 4.0]]  # pivote en la base, como se midió
+    assert by["Build_SpaceElevator_C"]["caja_m"][1][2] == 1000.0  # el cable al espacio
     assert by["Build_PipelinePumpMk2_C"]["ruta"] == "/Game/FactoryGame/Buildable/Factory/PipePumpMk2/Build_PipelinePumpMK2.Build_PipelinePumpMk2_C"

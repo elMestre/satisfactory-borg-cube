@@ -104,15 +104,22 @@ def caja(cls, x, y, z, giro):
 
 
 def obstaculos(sg, lo, hi):
-    """Puntos (cm) de actores dentro de la caja lo–hi: pivotes, splines de cintas y tuberías, escaleras de mano
-    (20 m hacia arriba) y cables (recta entre sus extremos)."""
-    pts = []
+    """Cajas (mín, máx) en cm de lo que ocupan los actores dentro de lo–hi: la caja de holgura del catálogo girada a su sitio,
+    o, si no la hay, su pivote; más los puntos de splines de cintas y tuberías, de las escaleras de mano (20 m hacia arriba)
+    y de los cables (recta entre extremos), como cajas de tamaño cero."""
+    cajas = []
     for o in sg.allSaveObjects():
         if not (o.isActor and "/Buildable/" in o.BaseHeader.ClassName and hasattr(o.Header, "Transform")):
             continue
         t, q = o.Header.Transform.Translation, o.Header.Transform.Rotation
-        base = np.array((t.X, t.Y, t.Z))
-        trazo = [base]
+        base, u = np.array((t.X, t.Y, t.Z)), np.array((q.X, q.Y, q.Z))
+        rot = lambda w: w + 2 * q.W * np.cross(u, w) + 2 * np.cross(u, np.cross(u, w))
+        local = CAT.get(o.BaseHeader.ClassName.rsplit(".", 1)[-1], {}).get("caja_m")
+        if local:
+            esq = np.array([base + rot(np.array((x, y, z)) * 100) for x in (local[0][0], local[1][0])
+                            for y in (local[0][1], local[1][1]) for z in (local[0][2], local[1][2])])
+            cajas.append((esq.min(axis=0), esq.max(axis=0)))
+        trazo = [base] if not local else []
         if "Ladder" in o.BaseHeader.ClassName:
             trazo = [base + (0, 0, dz) for dz in range(0, 2001, 50)]
         for p in o.Object.Properties:
@@ -122,9 +129,7 @@ def obstaculos(sg, lo, hi):
                     for d in e.Data:
                         if d.Name.Name == "Location":
                             v = d.Value.Data if hasattr(d.Value, "Data") else d.Value
-                            # rotar (v.X, v.Y, v.Z) por el cuaternión del actor
-                            u = np.array((q.X, q.Y, q.Z)); w = np.array((v.X, v.Y, v.Z))
-                            loc.append(base + w + 2 * q.W * np.cross(u, w) + 2 * np.cross(u, np.cross(u, w)))
+                            loc.append(base + rot(np.array((v.X, v.Y, v.Z))))
                 trazo += [a + (b - a) * f / 16 for a, b in zip(loc, loc[1:]) for f in range(17)]
             elif p.Name.Name == "mWireInstances":
                 for e in p.Value.Values:
@@ -132,8 +137,9 @@ def obstaculos(sg, lo, hi):
                     if len(ext) == 2:
                         n = max(2, int(np.linalg.norm(ext[1] - ext[0]) / 50))
                         trazo += [ext[0] + (ext[1] - ext[0]) * f / n for f in range(n + 1)]
-        pts += [p for p in trazo if (p >= lo).all() and (p <= hi).all()]
-    return np.array(pts).reshape(-1, 3)
+        cajas += [(p, p) for p in trazo]
+    cajas = [(a, b) for a, b in cajas if (b >= lo).all() and (a <= hi).all()]
+    return np.array([a for a, _ in cajas]).reshape(-1, 3), np.array([b for _, b in cajas]).reshape(-1, 3)
 
 
 def guardar(sg, ruta):
@@ -182,10 +188,10 @@ def escribir(entrada, salida, piezas, muestras, retoque=None):
     hay = np.array([k[1:4] for k in antes])
     cajas = [caja(c, x, y, z, g) for c, x, y, z, g, _ in piezas]
     lo, hi = np.min([c[0] for c in cajas], axis=0) - 100, np.max([c[1] for c in cajas], axis=0) + 100
-    obs = obstaculos(sg, lo, hi)
+    olo, ohi = obstaculos(sg, lo, hi)
     ok, fuera = [], []
     for p, (a, b) in zip(piezas, cajas):
-        choca = (abs(hay - p[1:4]) < 400).all(axis=1).any() or ((obs > a + 10) & (obs < b - 10)).all(axis=1).any()
+        choca = (abs(hay - p[1:4]) < 400).all(axis=1).any() or ((olo < b - 10) & (ohi > a + 10)).all(axis=1).any()
         (fuera if choca else ok).append(p)
     piezas = ok
 
