@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+# Partidas: solo se versionan la base y la última muestra, con git add -f
+*.sav
+# Informes de producción de junio, ajenos al cubo
+*_333.txt
