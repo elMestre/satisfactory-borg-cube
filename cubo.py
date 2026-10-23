@@ -1,5 +1,5 @@
-"""Fase 2 del cubo "Estrella de la Muerte II" (decisiones en ARQUITECTURA.md) → 340.sav
-Uso: .venv/bin/python cubo.py [ENTRADA] [SALIDA]   (por defecto 334c.sav → 340.sav)
+"""Fase 2 del cubo "Estrella de la Muerte II" (decisiones en ARQUITECTURA.md) → 341.sav
+Uso: .venv/bin/python cubo.py [ENTRADA] [SALIDA]   (por defecto 334c.sav → 341.sav)
 
 - Cara sur bajo la plataforma (X 2988–3252): vitrina de cristal de 50 a 138 m, delante de la fábrica, y encima pared ciega
   con costillas de hormigón cada 16 m (la que eligió Carlos), cornisas en grafito a 138 y 338 m. La escalera de mano de
@@ -7,7 +7,8 @@ Uso: .venv/bin/python cubo.py [ENTRADA] [SALIDA]   (por defecto 334c.sav → 340
 - Esqueleto en construcción hasta el techo 3:2:1 (568 m): columnas de celosía (Big Frame Pillar, cubos de 4 m) y vigas.
 - Sala del ascensor (Carlos, tras el 339): suelo de 320 × 320 m a 382 m alrededor del ascensor, para que lleguen muchas
   cintas, sobre pilares de hormigón cada 64 m por el perímetro hasta el suelo (que no cuelgue). Desde sus bordes, un
-  embudo en pirámide invertida de paredes a 45° hasta el techo (boca de 688 m), con las esquinas en bloques escalonados.
+  embudo en pirámide invertida de paredes a 45° hasta el techo (boca de 688 m). Las esquinas (los bloques escalonados del
+  340 eran "horribles") llevan ahora la pared inclinada de esquina de FICSIT, con una prueba de giro por esquina.
 - Corredor de cristal sobre el puente N–S (X 2448) fuera del embudo, sin pórticos ni vigas (le agobiaban).
 - El mirador de la fase 0, para ver la cara sur desde fuera."""
 import math, sys
@@ -25,6 +26,10 @@ LOSA, CIMIENTO, PRETIL = "Build_Foundation_8x1_01_C", "Build_Foundation_8x4_01_C
 BAHIAS = list(range(299200, 324801, 800))             # 33 vanos de 8 m bajo la plataforma (centros 2992…3248 m)
 SALA = (223600, 255600, -216400, -184400)             # bordes de la sala: X 2236–2556, Y −2164…−1844
 NIVELES = 23                                          # escalones de 8 m del embudo: de 382 a 566 m
+ESQUINA = "Build_Wall_Orange_8x8_Corner_01_C"          # Tilted Corner Wall 8 m (la de FICSIT es ligera; la de acero, no)
+# Prueba A/B/C/D: no se sabe hacia dónde sube la esquina. Con la hipótesis "sube hacia su +X y +Y local" irían NE 270°,
+# SE 0°, SO 90° y NO 180°; cada esquina lleva un desfase distinto (0, 90, 180, 270) y Carlos dice cuál queda bien.
+GIROS_ESQUINA = (270, 90, 270, 90)                     # NE, SE, SO, NO
 PUENTE_X = 244800                                     # puente N–S del anillo
 borg, gris, grafito = M.SWATCH, M.GRIS, M.swatch(GRAFITO)
 
@@ -62,8 +67,8 @@ def sala():
 
 def embudo():
     """Pirámide invertida: anillos de paredes inclinadas a 45° (suben hacia su +X local, ver PLAN.md) desde los bordes de
-    la sala. El nivel k sube de 382 + 8k a 390 + 8k m y se aleja 8k m del borde. Las esquinas son bloques macizos en
-    grafito (dos cimientos 8x4 por escalón). Devuelve (piezas, boca)."""
+    la sala. El nivel k sube de 382 + 8k a 390 + 8k m y se aleja 8k m del borde. Las esquinas, con la pared inclinada de
+    esquina (prueba de giro en GIROS_ESQUINA). Devuelve (piezas, boca)."""
     x0, x1, y0, y1 = SALA
     out = []
     for k in range(NIVELES):
@@ -71,7 +76,7 @@ def embudo():
         xs, ys = range(x0 - e + 400, x1 + e, 800), range(y0 - e + 400, y1 + e, 800)
         out += [(M.CHAFLAN, x, y0 - d, z, 270, borg) for x in xs] + [(M.CHAFLAN, x, y1 + d, z, 90, borg) for x in xs]
         out += [(M.CHAFLAN, x0 - d, y, z, 180, borg) for y in ys] + [(M.CHAFLAN, x1 + d, y, z, 0, borg) for y in ys]
-        out += [(CIMIENTO, x, y, z + dz, 0, grafito) for x in (x0 - d, x1 + d) for y in (y0 - d, y1 + d) for dz in (200, 600)]
+        out += [(ESQUINA, x, y, z, g, borg) for (x, y), g in zip(((x1 + d, y0 - d), (x1 + d, y1 + d), (x0 - d, y1 + d), (x0 - d, y0 - d)), GIROS_ESQUINA)]
     e = 800 * NIVELES
     return out, (x0 - e, x1 + e, y0 - e, y1 + e)
 
@@ -141,4 +146,4 @@ def main(entrada, salida):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "334c.sav", sys.argv[2] if len(sys.argv) > 2 else "340.sav")
+    main(sys.argv[1] if len(sys.argv) > 1 else "334c.sav", sys.argv[2] if len(sys.argv) > 2 else "341.sav")

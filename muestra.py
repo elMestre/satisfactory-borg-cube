@@ -88,19 +88,12 @@ def instancia(cls, x, y, z, giro, muestra):
 
 
 def caja(cls, x, y, z, giro):
-    """Caja (min, max) en cm que ocupa la pieza, con las medidas del catálogo y los pivotes medidos (ver PLAN.md)."""
-    m = {k: v * 100 for k, v in CAT[cls]["medidas_m"].items() if not isinstance(v, list)}
-    if isinstance(CAT[cls]["medidas_m"].get("Size"), list):  # pilares: pivote en el centro
-        hx, hy, hz = (v * 50 for v in CAT[cls]["medidas_m"]["Size"])
-        lo, hi = (-hx, -hy, -hz), (hx, hy, hz)
-    elif "Pillar" not in cls and "Depth" in m:  # cimientos y rampas: pivote en el centro
-        lo, hi = (-m["Width"] / 2, -m["Depth"] / 2, -m["Height"] / 2), (m["Width"] / 2, m["Depth"] / 2, m["Height"] / 2)
-    else:  # paredes: pivote en el centro de la base; grosor 0,5 m, o el fondo del chaflán
-        hx = m.get("AngularDepth", 0) / 2 or 25
-        lo, hi = (-hx, -m["Width"] / 2, 0), (hx, m["Width"] / 2, m["Height"])
-    if round(giro) % 180 == 90:
-        lo, hi = (lo[1], lo[0], lo[2]), (hi[1], hi[0], hi[2])
-    return np.array(lo) + (x, y, z), np.array(hi) + (x, y, z)
+    """Caja (min, max) en cm que ocupa la pieza: su caja de holgura del catálogo (ejes de la pieza) girada a su sitio."""
+    (lx, ly, lz), (hx, hy, hz) = CAT[cls]["caja_m"]
+    g = math.radians(giro)
+    esq = np.array([(px * math.cos(g) - py * math.sin(g), px * math.sin(g) + py * math.cos(g), pz)
+                    for px in (lx, hx) for py in (ly, hy) for pz in (lz, hz)]) * 100
+    return esq.min(axis=0).round() + (x, y, z), esq.max(axis=0).round() + (x, y, z)
 
 
 def obstaculos(sg, lo, hi):

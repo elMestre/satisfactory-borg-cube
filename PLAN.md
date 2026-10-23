@@ -164,3 +164,7 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
   - Se desconoce la altura del terreno bajo la sala: los pilares bajan a −2 m. Si quedan cortos o enterrados, se verá en el juego.
 - 2026-10-23 19:25: Carlos aporta una guía de diseño arquitectónico para Satisfactory; se guarda en `DISENO.md` y se enlaza en las Normas.
 - 2026-10-23 19:05 (hora del log): el **340 carga sin errores nuevos** y sin aviso de huella. Piezas ligeras aplicadas en **1,08 s** (unas 42.300, 1,5 veces las de partida). Serie: 0,75 s (27.900) → 0,88 s (36.700) → 1,08 s (42.300).
+- 2026-10-23 19:35: lo que dijo Carlos del 340: la sala, "mejor"; las esquinas escalonadas, "horribles" (en las capturas: escalera de cajas con huecos triangulares por los que se ve el cielo, y el grafito sin acabado sale casi blanco); los pilares, "pasan del suelo". Quitó el bloque de abajo de uno y el pilar quedó justo sobre la arena: allí el terreno está a 1–2 m, así que bajar a −2 m va bien.
+- 2026-10-23 19:45: **`341.sav`**, copiado a SaveGames, con vigilante. Las esquinas del embudo llevan ahora la **pared inclinada de esquina de FICSIT** (`Build_Wall_Orange_8x8_Corner_01`: es ligera, mientras que la de acero no lo es), pintada Borg, con una **prueba A/B/C/D de giro**: NE 270°, SE 90°, SO 270° y NO 90°, es decir, desfases 0/90/180/270 sobre la hipótesis "sube hacia su +X y +Y local". Hay que preguntar a Carlos qué esquina queda bien.
+  - `muestra.caja()` usa ahora la caja de holgura del catálogo de cualquier pieza (el 336 regenerado sigue saliendo idéntico).
+
