@@ -134,3 +134,4 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
   - **Corrección:** el cable del ascensor sale de su pivote (la caja de 8 × 8 × 1.000 m no está desplazada). La caja desplazada 20 m es un detalle pequeño de 5 × 4 × 3 m.
   - El catálogo trae ahora `caja_m` (holgura en ejes de la pieza) para 501 piezas, y los choques usan esas cajas de los actores.
 
+- 2026-10-23 17:44 (hora del log): el **338 carga sin errores nuevos** y sin aviso de huella. Piezas ligeras aplicadas en 0,87 s (unas 33.400 en total). Esperando el veredicto de Carlos: fachada, corredor y ascensor.
