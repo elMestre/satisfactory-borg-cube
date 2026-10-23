@@ -52,8 +52,19 @@ El juego no tiene física: los pilares son pura estética y ritmo.
 - Decisión de Carlos: ☐
 
 ## 6. Luz
-Pendiente del informe sobre generar luces y cables por script. Las luces son actores con conexión eléctrica.
-- **Propuesta provisional:** la envolvente la hace el script y las luces las pone Carlos con un blueprint del juego: un módulo de franja de luz verde, que se estampa en cada sección. Si el informe dice que el script es viable, se automatiza después.
+**Datos:**
+- **Consumos:** panel de techo (`Build_CeilingLight`) 2 MW; foco de pared o de torre 6 MW; farola 1 MW. Todas son actores, no piezas ligeras, y gastan solo de noche.
+- **Light Control Panel:** 7 colores, intensidad y encendido/apagado. Controla como grupo todo lo que cuelga de su conector de luces. Un panel de techo que nunca se ha conectado a un panel sale blanco, y el foco de pared no se colorea por separado.
+- **Cómo se guarda una conexión:** el cable (`Build_PowerLine`) guarda sus dos extremos en `mConnections`, y cada conexión lista sus cables en `mWires`. Los circuitos parecen recalcularse al cargar.
+- En el 334c **no hay ninguna luz** que sirva de ejemplo.
+- **Orden de magnitud:** una franja de paneles de techo cada 16 m por todo el perímetro de A son unas 355 luces, unos 710 MW de noche por franja.
+
+**Propuesta, mixta:**
+1. Carlos pone a mano, en una esquina de la sección sur, un Light Control Panel en verde y una luz de cada tipo, cableadas, y guarda.
+2. El script copia ese patrón (actor, componentes y cable) a lo largo de la fachada.
+3. Si al final son pocas decenas de luces, en vez de eso Carlos las estampa con un blueprint del juego, sin riesgo.
+
+- **Alternativa:** el verde solo con focos de pared, de 6 MW cada uno, desde fuera hacia la fachada.
 - Decisión de Carlos: ☐
 
 ## 7. Logística
@@ -68,5 +79,6 @@ Pendiente del recuento de andamiaje dentro y fuera de cada opción.
 
 ## 9. Presupuesto de piezas y rendimiento
 **Datos:** hoy hay 27.851 piezas ligeras. A supone unas 95.000 más (68.160 paredes y 26.995 cimientos de techo): 4,4 veces lo que hay. C, unas 175.000 (7,3 veces). El desglose está en la tabla del punto 2. Con el 336 cargado, la carga de piezas ligeras tarda 0,73 s.
+No hay cifras públicas de rendimiento con más de 100.000 piezas ligeras (ni de Coffee Stain ni de la comunidad): habrá que medirlo nosotros.
 - **Propuesta:** se construye por secciones, empezando por la cara del ascensor (sur), y tras cada sección se mide el rendimiento (FPS en el mismo sitio y tiempo de carga del log).
 - Decisión de Carlos: ☐
