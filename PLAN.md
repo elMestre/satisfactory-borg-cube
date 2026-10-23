@@ -135,3 +135,13 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
   - El catálogo trae ahora `caja_m` (holgura en ejes de la pieza) para 501 piezas, y los choques usan esas cajas de los actores.
 
 - 2026-10-23 17:44 (hora del log): el **338 carga sin errores nuevos** y sin aviso de huella. Piezas ligeras aplicadas en 0,87 s (unas 33.400 en total). Esperando el veredicto de Carlos: fachada, corredor y ascensor.
+- 2026-10-23 18:05: lo que dijo Carlos del 338:
+  - **Fachada:** la de costillas ("aunque quizá sea una muestra muy pequeña").
+  - **Corredor:** "mejor que plataforma desnuda, pero feo un rato", y además una caja cuadrada que no deja ver nada: hay que rediseñarlo.
+  - **Ascensor:** "ha mejorado mucho", pero lo imagina en una sala "en plan pirámide invertida", con más espacio alrededor (sin la caja de tirantes).
+- 2026-10-23 18:10: **`339.sav`**, copiado a SaveGames, con vigilante. Contenido:
+  - **Costillas en toda la cara sur:** 17 pilares de hormigón cada 16 m, de 50 a 378 m, sobre la vitrina y la pared ciega.
+  - **Embudo en pirámide invertida:** 3.127 paredes inclinadas a 45° en 23 anillos, de la isla (382 m) al techo (566 m), con una boca de 448 m. Las esquinas se resuelven cruzando los dos lados. La cruz del techo se para en la boca. Sin tirantes.
+  - **Corredor rediseñado y abierto:** galería de cristal con pórticos de celosía cada 16 m en el tramo norte, y puente de celosía (pretil de 1 m y viga de 8 m de canto bajo el tablero) en el tramo sur. Bajo el embudo, el puente pasa a cubierto con 8 m libres y entra a la isla por el enlace.
+  - 8.888 piezas. Se descartaron 59: 44 en la escalera de mano, 3 del dintel del extremo norte y 12 de la viga de celosía en los cruces.
+
