@@ -60,6 +60,12 @@ Imprescindibles: 19 cupones. Con los muy útiles, 28 (falta uno). **Ya tenidos y
 - Saves: `~/.local/share/Steam/steamapps/compatdata/526870/pfx/drive_c/users/steamuser/AppData/Local/FactoryGame/Saved/SaveGames/76561197962144663/`.
 
 ## Normas para cualquier sesión o agente
+- **Antes de diseñar una sección, leer `DISENO.md`** (guía de diseño que aportó Carlos el 2026-10-23). Cómo aplica aquí:
+  - **Producción:** aquí no se toca, así que ese criterio no aplica.
+  - **Logística, sí:** antes de vestir algo, ver qué conexiones llegan y dónde hay que dejar paso. La sala del ascensor necesita la entrada de muchas cintas.
+  - **Ya aprendido a golpes:** ritmo antes que azar (el relieve aleatorio se leía como ruido), ventanas donde se lee actividad (vitrina), nada de cajas planas (costillas), prototipo a escala, validar y luego repetir (el ciclo save → capturas).
+  - **Pendiente según la guía:** capa logística de cada sección, iluminación y registro del terreno (no se conoce bajo la sala).
+  - Al cerrar cada versión, puntuarla con los criterios de aceptación de la guía (0–2, sin "producción").
 - **No tocar nunca el `334.sav`** ni ningún save existente. Se escribe a un nombre nuevo (`335`, `336`…) en `cowork/satis` y se copia a SaveGames.
 - Cada script deja su comprobación: recargar la salida y verificar con `assert` que solo cambian las piezas previstas (recuento por clase) y que todas las recetas están desbloqueadas.
 - No veo el juego: Carlos carga el save y hace capturas con F12. Hay que preguntarle cosas concretas (ver la memoria `carlos-forma-de-trabajar`).
@@ -156,4 +162,4 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
   - **Corredor:** solo cristal, sin pórticos.
   - 14.495 piezas. Descartes, los previstos: 44 en la escalera, 40 cimientos sobre el puente y 2 paredes inclinadas que lo tapaban.
   - Se desconoce la altura del terreno bajo la sala: los pilares bajan a −2 m. Si quedan cortos o enterrados, se verá en el juego.
-
+- 2026-10-23 19:25: Carlos aporta una guía de diseño arquitectónico para Satisfactory; se guarda en `DISENO.md` y se enlaza en las Normas.
