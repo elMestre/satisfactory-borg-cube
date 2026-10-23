@@ -22,8 +22,9 @@ Las tres opciones de la maqueta (ver `img/f1_*`):
 - **A, caja completa (recomendada):** la planta del anillo (1.704 × 1.136 m), cerrada desde el suelo hasta el techo a 382 m. El anillo pasa a ser el borde del techo. Es lo que pide "cubo Borg, todo cerrado". El lago y la parte del cañón que quedan al sur (Y > −1436) siguen fuera.
 - **B, caja flotante:** la misma planta, de 182 a 382 m, sobre pilares gigantes. La fábrica de 30–160 m quedaría a la vista por debajo, en sombra. Es espectacular, pero encierra aire y deja fuera lo feo.
 - **C, caja con la zona este:** envuelve también X 3.250–4.330. Es la más grande; alternativa: cerrar la zona este como un anexo más bajo, en una sección posterior.
+- **Altura del techo:** a 382 m, que es el anillo actual, el techo corta 200 cimientos que suben hasta 422 m, y hay 22 cruces. **A 426 m** desaparecen, y el anillo de 380 m queda como una franja de coronación por dentro. Hay que decidirlo junto con la opción.
 - Que sea un cubo de verdad (1.136 m de lado) queda descartado: no cubre la planta del anillo y tendría 1,1 km de alto.
-- Decisión de Carlos: ☐ A ☐ B ☐ C ☐ A + anexo este
+- Decisión de Carlos: ☐ A ☐ B ☐ C ☐ A + anexo este · techo ☐ 382 m ☐ 426 m
 
 ## 3. Estructura
 El juego no tiene física: los pilares son pura estética y ritmo.
@@ -68,13 +69,25 @@ El juego no tiene física: los pilares son pura estética y ritmo.
 - Decisión de Carlos: ☐
 
 ## 7. Logística
-Pendiente del informe de cruces por cara (cintas, tuberías, cables, vías).
-- **Propuesta:** todo lo que cruce la envolvente entra por paredes con hueco (Conveyor Wall Hole, comprado), agrupado en "puertas logísticas" de 8 m, y nada queda colgando por fuera.
+**Cruces de la envolvente** (cintas y elevadores, tuberías, hipertubos y cables; no hay trenes):
+| Caja | Cintas | Tuberías | Hipertubos | Cables | Total | Dónde |
+|---|---|---|---|---|---|---|
+| A | 18 | 12 | 5 | 24 | **59** | casi todos en las caras N y E (la E es el enlace con la zona este) |
+| B | 5 | 12 | 4 | 13 | **34** | solo techo y suelo |
+| C | 3 | 18 | 3 | 22 | **46** | techo y suelo, en el suelo los extractores bajos |
+
+El techo a 382 m se cruza 22 veces en las tres opciones: hay 200 cimientos por encima, hasta 422 m.
+- **Propuesta:** con A son 59 pasos. Se agrupan en "puertas logísticas" de 8 m en las caras N y E, con paredes de hueco para cinta (Conveyor Wall Hole, ya comprado) y nada colgando por fuera. Los cables pasan por las mismas puertas.
 - Decisión de Carlos: ☐
 
 ## 8. Qué se queda y qué se va
-Pendiente del recuento de andamiaje dentro y fuera de cada opción.
-- **Propuesta:** dentro de la caja se queda todo, porque deja de verse. El andamiaje que quede fuera (pilares finos, pasarelas sueltas, rampas), en cuanto su tramo esté cerrado, se retira. El mirador de la fase 0 se retira cuando haya otro sitio desde el que mirar.
+**Recuento, dentro / fuera** (por el centro de cada pieza):
+| Caja | Fabricación (199) | Extracción (45) | Andamiaje (3.860) | Cimientos (18.914) |
+|---|---|---|---|---|
+| A | 98 / 101 | 8 / 37 | 3.072 / 788 | 13.217 / 5.697 |
+| B | 19 / 180 | 1 / 44 | 1.458 / 2.402 | 4.706 / 14.208 |
+
+- **Propuesta (con A):** se quedan las 3.072 piezas de andamiaje de dentro, que dejan de verse. De las **788 de fuera**, se retiran las que sobren al cerrar cada tramo. La mitad de la fábrica de fabricación y casi toda la extracción quedan fuera de A (la zona este y los extractores): se cierran después como anexos, o se quedan a la vista como "planeta" alrededor del cubo.
 - Decisión de Carlos: ☐
 
 ## 9. Presupuesto de piezas y rendimiento

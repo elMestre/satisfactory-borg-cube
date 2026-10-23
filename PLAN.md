@@ -2,7 +2,7 @@
 
 > Al aprobarse, este plan se copia a `~/cowork/satis/PLAN.md`, que pasa a ser la copia viva. Cada sesión o agente lee primero ese fichero y, al terminar, anota su avance en **Registro** (al final).
 
-**Estado (2026-10-23, 16:50):** fase 0 cerrada. **Fase 1 en borrador: `ARQUITECTURA.md`**, con los 9 puntos, una propuesta recomendada y alternativas en cada uno. Falta integrar los informes de luz, logística y andamiaje (puntos 6–8) y las maquetas `img/f1_*`, y que Carlos marque sus decisiones.
+**Estado (2026-10-23, 16:50):** fase 0 cerrada. **Fase 1 en borrador: `ARQUITECTURA.md`**, con los 9 puntos, una propuesta recomendada y alternativas en cada uno. Ya lleva los tres informes y las maquetas `img/f1_*`. Falta que Carlos marque sus decisiones.
 
 **Repo público:** https://github.com/elMestre/satisfactory-borg-cube. Incluye scripts, plan, catálogo, la partida base `334c.sav`, la última muestra y `img/` (capturas y dibujos). Los demás `.sav` se ignoran; los que se quieran subir van con `git add -f`.
 
@@ -115,3 +115,4 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
 - 2026-10-23 16:44: Carlos carga el 336 sin errores nuevos y **sin el aviso de huella**, así que `muestra.guardar()` funciona. Piezas ligeras aplicadas en 0,73 s. Esperando la captura desde el balcón.
 - 2026-10-23 16:45: captura desde el balcón subida a `img/`, con sus observaciones en la fase 0. Listo para la fase 1 (Carlos la lanzará con ultraplan sobre el repo).
 - 2026-10-23 16:50: fase 1 hecha aquí, a petición de Carlos ("esfuérzate al máximo y lanza subagentes"), antes de que se acabara su ventana de uso a las 17:00. Borrador de `ARQUITECTURA.md` subido; tres subagentes trabajando en maquetas, logística/andamiaje y luz/rendimiento.
+- 2026-10-23 16:54: `ARQUITECTURA.md` completa con los tres informes (maquetas A/B/C, luz, logística y andamiaje). Pendiente: que Carlos marque las casillas. Lo siguiente, la fase 2: la cara sur según lo que decida.
