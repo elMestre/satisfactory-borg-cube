@@ -10,6 +10,15 @@ Borrador del 2026-10-23, hecho con datos de `334c.sav` y con lo aprendido en la 
 
 ## 2. Envolvente
 Las tres opciones de la maqueta (ver `img/f1_*`):
+
+| Opción | Paredes 8×4 | Cimientos de techo (descontado el anillo) | Cimientos de suelo | Total nuevo, aprox. | Máquinas dentro (de 595) |
+|---|---|---|---|---|---|
+| A, caja completa | 68.160 | 26.995 | (el terreno) | **95.000** | 346 |
+| B, caja flotante | 35.500 | 26.995 | 30.246 | 93.000 | 87 |
+| C, caja con la zona este | 106.944 | 67.831 | (el terreno) | 175.000 | 565 |
+
+**Lo que enseña la planta (`img/f1_planta.png`):** el interior del anillo está **casi vacío**. La fábrica va pegada a los bordes: el bloque del ascensor al este (X 3.050–3.250), la franja norte y la franja oeste, más la zona este (X 3.700–4.330). Con A, el interior se convierte en un hangar colosal; con B, la caja encierra sobre todo aire (87 máquinas).
+
 - **A, caja completa (recomendada):** la planta del anillo (1.704 × 1.136 m), cerrada desde el suelo hasta el techo a 382 m. El anillo pasa a ser el borde del techo. Es lo que pide "cubo Borg, todo cerrado". El lago y la parte del cañón que quedan al sur (Y > −1436) siguen fuera.
 - **B, caja flotante:** la misma planta, de 182 a 382 m, sobre pilares gigantes. La fábrica de 30–160 m quedaría a la vista por debajo, en sombra. Es espectacular, pero encierra aire y deja fuera lo feo.
 - **C, caja con la zona este:** envuelve también X 3.250–4.330. Es la más grande; alternativa: cerrar la zona este como un anexo más bajo, en una sección posterior.
@@ -58,6 +67,6 @@ Pendiente del recuento de andamiaje dentro y fuera de cada opción.
 - Decisión de Carlos: ☐
 
 ## 9. Presupuesto de piezas y rendimiento
-**Datos:** hoy hay 27.851 piezas ligeras. Cerrar A son unas 68.000 paredes más unos 27.000 cimientos de techo, es decir, unas 95.000 piezas más (cifras exactas por opción en la salida de `maqueta.py`). Con el 336 cargado, la carga de piezas ligeras tarda 0,73 s.
+**Datos:** hoy hay 27.851 piezas ligeras. A supone unas 95.000 más (68.160 paredes y 26.995 cimientos de techo): 4,4 veces lo que hay. C, unas 175.000 (7,3 veces). El desglose está en la tabla del punto 2. Con el 336 cargado, la carga de piezas ligeras tarda 0,73 s.
 - **Propuesta:** se construye por secciones, empezando por la cara del ascensor (sur), y tras cada sección se mide el rendimiento (FPS en el mismo sitio y tiempo de carga del log).
 - Decisión de Carlos: ☐
