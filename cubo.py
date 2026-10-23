@@ -1,5 +1,5 @@
-"""Fase 2 del cubo "Estrella de la Muerte II" (decisiones en ARQUITECTURA.md) → 341.sav
-Uso: .venv/bin/python cubo.py [ENTRADA] [SALIDA]   (por defecto 334c.sav → 341.sav)
+"""Fase 2 del cubo "Estrella de la Muerte II" (decisiones en ARQUITECTURA.md) → 342.sav
+Uso: .venv/bin/python cubo.py [ENTRADA] [SALIDA]   (por defecto 334c.sav → 342.sav)
 
 - Cara sur bajo la plataforma (X 2988–3252): vitrina de cristal de 50 a 138 m, delante de la fábrica, y encima pared ciega
   con costillas de hormigón cada 16 m (la que eligió Carlos), cornisas en grafito a 138 y 338 m. La escalera de mano de
@@ -10,7 +10,8 @@ Uso: .venv/bin/python cubo.py [ENTRADA] [SALIDA]   (por defecto 334c.sav → 341
   embudo en pirámide invertida de paredes a 45° hasta el techo (boca de 688 m). Las esquinas (los bloques escalonados del
   340 eran "horribles") llevan ahora la pared inclinada de esquina de FICSIT, con una prueba de giro por esquina.
 - Corredor de cristal sobre el puente N–S (X 2448) fuera del embudo, sin pórticos ni vigas (le agobiaban).
-- El mirador de la fase 0, para ver la cara sur desde fuera."""
+- El mirador de la fase 0, para ver la cara sur desde fuera.
+- Al cargar, el jugador aparece en la sala, 100 m al norte del ascensor (lo pidió Carlos)."""
 import math, sys
 import numpy as np
 import satisfactory_save as s
@@ -19,6 +20,7 @@ import muestra as M
 TECHO = 56800                                         # 3:2:1 → 568 m (centro de la última fila de celosía)
 X_O, X_E, Y_S, Y_N = 155200, 324800, -144000, -256800  # centros de cimiento del borde del anillo
 CENTRO = (240000, -200000, 38200)                     # pivote del ascensor (su cable sale de aquí) sobre el anillo (382 m)
+JUGADOR = (240000, -210000, 38310)                    # sobre el suelo de la sala, 100 m al norte del ascensor (el pivote va 1,1 m sobre el suelo)
 GRAFITO = 15                                          # libre en el 334c
 MUESTRAS = {**M.BORG, GRAFITO: ((0.030, 0.032, 0.035, 1.0), M.NEGRO, "")}
 VIDRIO, CELOSIA, PILAR = "Build_Wall_Window_Thin_8x4_01_C", "Build_PillarMiddle_Frame_C", "Build_PillarMiddle_Concrete_C"
@@ -112,10 +114,13 @@ def corredor(sg, nuevos, boca):
     return out
 
 
-def ascensor(sg):
-    """Mueve el ascensor espacial al centro del cubo."""
+def retoques(sg):
+    """Mueve el ascensor espacial al centro del cubo, y al jugador a la sala, para aparecer allí al cargar."""
     t = M.objeto(sg, "Build_SpaceElevator_C").Header.Transform.Translation
     t.X, t.Y, t.Z = map(float, CENTRO)
+    j = M.objeto(sg, "Char_Player_C").Header.Transform
+    j.Translation.X, j.Translation.Y, j.Translation.Z = map(float, JUGADOR)
+    j.Rotation.X, j.Rotation.Y, j.Rotation.Z, j.Rotation.W = 0.0, 0.0, math.sin(math.pi / 4), math.cos(math.pi / 4)  # mira al sur
 
 
 def huella_ascensor(giro):
@@ -138,12 +143,14 @@ def main(entrada, salida):
     piezas = cara_sur() + sala() + piezas_embudo + esqueleto(boca) + M.mirador()
     piezas += corredor(sg, piezas, boca)
     piezas = list(dict.fromkeys(piezas))
-    M.escribir(entrada, salida, piezas, MUESTRAS, retoque=ascensor)
-    el = M.objeto(s.SaveGame(salida), "Build_SpaceElevator_C").Header.Transform.Translation
-    assert (round(el.X), round(el.Y), round(el.Z)) == CENTRO, "el ascensor no se movió"
+    M.escribir(entrada, salida, piezas, MUESTRAS, retoque=retoques)
+    sg2 = s.SaveGame(salida)
+    for cls, donde in (("Build_SpaceElevator_C", CENTRO), ("Char_Player_C", JUGADOR)):
+        t = M.objeto(sg2, cls).Header.Transform.Translation
+        assert (round(t.X), round(t.Y), round(t.Z)) == donde, f"{cls} no se movió"
     print(f"  ascensor en {tuple(v / 100 for v in CENTRO)} m, giro {giro}°, huella X {ex0 / 100:.0f}–{ex1 / 100:.0f}, "
           f"Y {ey0 / 100:.0f}–{ey1 / 100:.0f}; boca del embudo X {boca[0] / 100:.0f}–{boca[1] / 100:.0f}, Y {boca[2] / 100:.0f}–{boca[3] / 100:.0f}")
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "334c.sav", sys.argv[2] if len(sys.argv) > 2 else "341.sav")
+    main(sys.argv[1] if len(sys.argv) > 1 else "334c.sav", sys.argv[2] if len(sys.argv) > 2 else "342.sav")
