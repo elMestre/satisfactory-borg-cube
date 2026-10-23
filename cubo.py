@@ -1,14 +1,14 @@
-"""Fase 2 del cubo "Estrella de la Muerte II" (decisiones en ARQUITECTURA.md) → 339.sav
-Uso: .venv/bin/python cubo.py [ENTRADA] [SALIDA]   (por defecto 334c.sav → 339.sav)
+"""Fase 2 del cubo "Estrella de la Muerte II" (decisiones en ARQUITECTURA.md) → 340.sav
+Uso: .venv/bin/python cubo.py [ENTRADA] [SALIDA]   (por defecto 334c.sav → 340.sav)
 
 - Cara sur bajo la plataforma (X 2988–3252): vitrina de cristal de 50 a 138 m, delante de la fábrica, y encima pared ciega
-  con costillas de hormigón cada 16 m (la variante que eligió Carlos en el 338), cornisas en grafito a 138 y 338 m.
-  Lo que choque (la escalera de mano de X 3200) se descarta y queda abierto.
+  con costillas de hormigón cada 16 m (la que eligió Carlos), cornisas en grafito a 138 y 338 m. La escalera de mano de
+  X 3200 queda en su ranura abierta (a Carlos le encanta).
 - Esqueleto en construcción hasta el techo 3:2:1 (568 m): columnas de celosía (Big Frame Pillar, cubos de 4 m) y vigas.
-- Sala del ascensor en pirámide invertida (Carlos, tras el 338): el ascensor sobre una isla de 80 × 80 m en el centro del
-  cubo, y desde sus bordes un embudo de paredes inclinadas a 45° hasta el techo, con la boca (448 m) abierta al cielo.
-- Corredor sobre el puente N–S (X 2448), dos diseños abiertos para comparar: galería de cristal con pórticos (tramo norte)
-  y puente de celosía con pretil (tramo sur). Bajo el embudo el puente pasa a cubierto.
+- Sala del ascensor (Carlos, tras el 339): suelo de 320 × 320 m a 382 m alrededor del ascensor, para que lleguen muchas
+  cintas, sobre pilares de hormigón cada 64 m por el perímetro hasta el suelo (que no cuelgue). Desde sus bordes, un
+  embudo en pirámide invertida de paredes a 45° hasta el techo (boca de 688 m), con las esquinas en bloques escalonados.
+- Corredor de cristal sobre el puente N–S (X 2448) fuera del embudo, sin pórticos ni vigas (le agobiaban).
 - El mirador de la fase 0, para ver la cara sur desde fuera."""
 import math, sys
 import numpy as np
@@ -23,7 +23,7 @@ MUESTRAS = {**M.BORG, GRAFITO: ((0.030, 0.032, 0.035, 1.0), M.NEGRO, "")}
 VIDRIO, CELOSIA, PILAR = "Build_Wall_Window_Thin_8x4_01_C", "Build_PillarMiddle_Frame_C", "Build_PillarMiddle_Concrete_C"
 LOSA, CIMIENTO, PRETIL = "Build_Foundation_8x1_01_C", "Build_Foundation_8x4_01_C", "Build_SteelWall_8x1_C"
 BAHIAS = list(range(299200, 324801, 800))             # 33 vanos de 8 m bajo la plataforma (centros 2992…3248 m)
-ISLA = (235600, 243600, -204400, -196400)             # bordes de la isla: X 2356–2436, Y −2044…−1964
+SALA = (223600, 255600, -216400, -184400)             # bordes de la sala: X 2236–2556, Y −2164…−1844
 NIVELES = 23                                          # escalones de 8 m del embudo: de 382 a 566 m
 PUENTE_X = 244800                                     # puente N–S del anillo
 borg, gris, grafito = M.SWATCH, M.GRIS, M.swatch(GRAFITO)
@@ -49,30 +49,29 @@ def columna(x, y, z0=38400):
     return [celosia(x, y, z) for z in range(z0, TECHO, 400)]
 
 
-def isla():
-    """Isla de 80 × 80 m bajo el ascensor (cara a 382 m), chaflanes a 45° por debajo de sus bordes y enlace con el puente."""
-    x0, x1, y0, y1 = ISLA
-    xs, ys = range(x0 + 400, x1, 800), range(y0 + 400, y1, 800)
-    out = [(CIMIENTO, x, y, 38000, 0, borg) for x in xs for y in ys]
-    out.append((CIMIENTO, x1 + 400, CENTRO[1], 38000, 0, borg))         # enlace con el puente (X 2436–2444)
-    zc = 37000                                                          # chaflán: caja de 8 m bajo la cara inferior (378)
-    out += [(M.CHAFLAN, x, ys[0], zc, 270, borg) for x in xs] + [(M.CHAFLAN, x, ys[-1], zc, 90, borg) for x in xs]
-    out += [(M.CHAFLAN, xs[0], y, zc, 180, borg) for y in ys] + [(M.CHAFLAN, xs[-1], y, zc, 0, borg) for y in ys]
+def sala():
+    """Suelo de 320 × 320 m a 382 m alrededor del ascensor (el puente N–S existente queda dentro y se respeta), sobre
+    pilares de hormigón cada 64 m por el perímetro, del suelo (−2 m) a la cara inferior (378 m)."""
+    x0, x1, y0, y1 = SALA
+    out = [(CIMIENTO, x, y, 38000, 0, borg) for x in range(x0 + 400, x1, 800) for y in range(y0 + 400, y1, 800)]
+    xs, ys = range(x0, x1 + 1, 6400), range(y0, y1 + 1, 6400)
+    borde = [(x, y) for x in xs for y in ys if x in (x0, x1) or y in (y0, y1)]
+    out += [(PILAR, x, y, z, 0, grafito) for x, y in borde for z in range(0, 37601, 400)]   # bloques de −2 a 378 m
     return out
 
 
 def embudo():
     """Pirámide invertida: anillos de paredes inclinadas a 45° (suben hacia su +X local, ver PLAN.md) desde los bordes de
-    la isla. El nivel k sube de 382 + 8k a 390 + 8k m y se aleja 8k m del borde; cada lado se alarga por las esquinas, donde
-    se cruza con el de al lado. Devuelve (piezas, boca)."""
-    x0, x1, y0, y1 = ISLA
+    la sala. El nivel k sube de 382 + 8k a 390 + 8k m y se aleja 8k m del borde. Las esquinas son bloques macizos en
+    grafito (dos cimientos 8x4 por escalón). Devuelve (piezas, boca)."""
+    x0, x1, y0, y1 = SALA
     out = []
     for k in range(NIVELES):
-        d, z, e = 800 * k + 400, 38200 + 800 * k, 800 * (k + 1)
+        d, z, e = 800 * k + 400, 38200 + 800 * k, 800 * k
         xs, ys = range(x0 - e + 400, x1 + e, 800), range(y0 - e + 400, y1 + e, 800)
         out += [(M.CHAFLAN, x, y0 - d, z, 270, borg) for x in xs] + [(M.CHAFLAN, x, y1 + d, z, 90, borg) for x in xs]
-        out += [(M.CHAFLAN, x0 - d, y, z, 180, borg) for y in ys]
-        out += [(M.CHAFLAN, x1 + d, y, z, 0, borg) for y in ys if k or y != CENTRO[1]]   # sin tapar el enlace con el puente
+        out += [(M.CHAFLAN, x0 - d, y, z, 180, borg) for y in ys] + [(M.CHAFLAN, x1 + d, y, z, 0, borg) for y in ys]
+        out += [(CIMIENTO, x, y, z + dz, 0, grafito) for x in (x0 - d, x1 + d) for y in (y0 - d, y1 + d) for dz in (200, 600)]
     e = 800 * NIVELES
     return out, (x0 - e, x1 + e, y0 - e, y1 + e)
 
@@ -93,27 +92,18 @@ def esqueleto(boca):
 
 
 def corredor(sg, nuevos, boca):
-    """Dos diseños abiertos sobre el puente N–S (cara a 382 m), fuera de la planta del embudo. Sin pared donde llega otro suelo.
-    - Norte: galería de cristal (Full Frame Window, 8 m de alto) con pórticos de celosía en U cada 16 m.
-    - Sur: puente de celosía: pretil de 1 m y viga de celosía de 8 m de canto bajo el tablero."""
+    """Corredor de cristal sobre el puente N–S (cara a 382 m) fuera de la planta del embudo: paredes de Full Frame Window de
+    8 m de alto a los dos lados, sin pórticos ni techo. Sin pared donde llega otro suelo."""
     suelo = {(round(x / 100), round(y / 100)) for (c, x, y, z, _s) in M.censo(sg) if "Foundation" in c and abs(z - 38000) < 100}
     suelo |= {(round(x / 100), round(y / 100)) for c, x, y, z, *_ in nuevos if c == CIMIENTO and z == 38000}
     _, _, by0, by1 = boca
     out = []
-    for k, y in enumerate(range(Y_N, Y_S + 1, 800)):
+    for y in range(Y_N, Y_S + 1, 800):
         if by0 - 400 <= y <= by1 + 400:
             continue                                                    # bajo el embudo
-        lados = [(PUENTE_X + s_ * 400, PUENTE_X + s_ * 800, PUENTE_X + s_ * 600) for s_ in (-1, 1)]   # pared, vecino, pórtico
-        abiertos = [l for l in lados if (round(l[1] / 100), round(y / 100)) not in suelo]
-        if y < by0:                                                     # tramo norte: galería
-            for xw, _, _ in abiertos:
+        for xw, vecino in ((PUENTE_X - 400, PUENTE_X - 800), (PUENTE_X + 400, PUENTE_X + 800)):
+            if (round(vecino / 100), round(y / 100)) not in suelo:
                 out += [(VIDRIO, xw, y, z, 0, borg) for z in (38200, 38600)]
-            if k % 2 == 0:
-                out += [celosia(xp, y, z) for _, _, xp in abiertos for z in (38400, 38800)]
-                out += [celosia(x, y, 39200) for x in range(PUENTE_X - 600, PUENTE_X + 601, 400)]
-        else:                                                           # tramo sur: celosía
-            out += [(PRETIL, xw, y, 38200, 0, borg) for xw, _, _ in abiertos]
-            out += [celosia(x, y, z) for x in (PUENTE_X - 200, PUENTE_X + 200) for z in (37600, 37200)]
     return out
 
 
@@ -137,10 +127,10 @@ def main(entrada, salida):
     q = M.objeto(sg, "Build_SpaceElevator_C").Header.Transform.Rotation
     giro = round(math.degrees(2 * math.atan2(q.Z, q.W))) % 360
     (ex0, ey0), (ex1, ey1) = huella_ascensor(giro)
-    x0, x1, y0, y1 = ISLA
-    assert x0 < ex0 and ex1 < x1 and y0 < ey0 and ey1 < y1, "el ascensor no cabe en la isla"
+    x0, x1, y0, y1 = SALA
+    assert x0 < ex0 and ex1 < x1 and y0 < ey0 and ey1 < y1, "el ascensor no cabe en la sala"
     piezas_embudo, boca = embudo()
-    piezas = cara_sur() + isla() + piezas_embudo + esqueleto(boca) + M.mirador()
+    piezas = cara_sur() + sala() + piezas_embudo + esqueleto(boca) + M.mirador()
     piezas += corredor(sg, piezas, boca)
     piezas = list(dict.fromkeys(piezas))
     M.escribir(entrada, salida, piezas, MUESTRAS, retoque=ascensor)
@@ -151,4 +141,4 @@ def main(entrada, salida):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "334c.sav", sys.argv[2] if len(sys.argv) > 2 else "339.sav")
+    main(sys.argv[1] if len(sys.argv) > 1 else "334c.sav", sys.argv[2] if len(sys.argv) > 2 else "340.sav")

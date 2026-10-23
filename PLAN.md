@@ -146,3 +146,14 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
   - 8.888 piezas. Se descartaron 59: 44 en la escalera de mano, 3 del dintel del extremo norte y 12 de la viga de celosía en los cruces.
 
 - 2026-10-23 18:50 (hora del log): el **339 carga sin errores nuevos** y sin aviso de huella. Piezas ligeras aplicadas en 0,88 s (unas 36.700 en total, 1,3 veces las de partida). Esperando el veredicto de Carlos: embudo, corredor y costillas.
+- 2026-10-23 19:05: lo que dijo Carlos del 339:
+  - **Pared:** "aceptable, no bien ni bonito", y "genial por el hueco con escalera". **La ranura abierta con la escalera de mano le encanta:** es un motivo a repetir (ranuras verticales de circulación a la vista).
+  - **Pirámide:** "bien, pero esperaba una sala inmensa alrededor del ascensor", porque hay que conectar muchas cintas. Hay que mejorar las esquinas, y que no quede colgando. "Buen principio".
+  - **Pasillos:** se queda con el acristalado, pero "me agobia tanta viga alrededor".
+- 2026-10-23 19:15: **`340.sav`**, copiado a SaveGames, con vigilante. Contenido:
+  - **Sala del ascensor de 320 × 320 m** a 382 m, que integra el puente N–S. Se apoya en 20 pilares de hormigón cada 64 m por el perímetro, de −2 a 378 m.
+  - **Embudo desde los bordes de la sala** hasta 566 m, con una boca de 688 m. Las esquinas son bloques escalonados de cimientos 8x4 en grafito, sin paredes cruzadas.
+  - **Corredor:** solo cristal, sin pórticos.
+  - 14.495 piezas. Descartes, los previstos: 44 en la escalera, 40 cimientos sobre el puente y 2 paredes inclinadas que lo tapaban.
+  - Se desconoce la altura del terreno bajo la sala: los pilares bajan a −2 m. Si quedan cortos o enterrados, se verá en el juego.
+
