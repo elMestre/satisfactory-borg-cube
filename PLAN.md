@@ -145,3 +145,4 @@ Orden propuesto: 1) la cara del ascensor espacial, que es la más visible; 2) el
   - **Corredor rediseñado y abierto:** galería de cristal con pórticos de celosía cada 16 m en el tramo norte, y puente de celosía (pretil de 1 m y viga de 8 m de canto bajo el tablero) en el tramo sur. Bajo el embudo, el puente pasa a cubierto con 8 m libres y entra a la isla por el enlace.
   - 8.888 piezas. Se descartaron 59: 44 en la escalera de mano, 3 del dintel del extremo norte y 12 de la viga de celosía en los cruces.
 
+- 2026-10-23 18:50 (hora del log): el **339 carga sin errores nuevos** y sin aviso de huella. Piezas ligeras aplicadas en 0,88 s (unas 36.700 en total, 1,3 veces las de partida). Esperando el veredicto de Carlos: embudo, corredor y costillas.
